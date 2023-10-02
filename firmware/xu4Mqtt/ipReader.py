@@ -20,17 +20,30 @@ def main():
     print("Gaining Public and Private IPs")
 
     publicIp = get('https://api.ipify.org').text
-    #localIp  = ni.ifaddresses('docker0')[ni.AF_INET][0]['addr'] # Lab Machine
-    localIp = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr'] # Odroid XU4
-
-    sensorDictionary =  OrderedDict([
+    try:
+        localIp = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr'] # Odroid XU4
+        sensorDictionary =  OrderedDict([
             ("dateTime"     , str(dateTimeNow)),
             ("publicIp"  ,str(publicIp)),
             ("localIp"  ,str(localIp))
             ])
-
-    mSR.sensorFinisherIP(dateTimeNow,sensorName,sensorDictionary)
-
+        mSR.sensorFinisherIP(dateTimeNow,sensorName,sensorDictionary)        
+    except Exception as e:
+        print ("Error: %s" % (str(e)))
+    
+    try:
+        localIp = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr'] # Odroid XU4
+        sensorDictionary =  OrderedDict([
+            ("dateTime"     , str(dateTimeNow)),
+            ("publicIp"  ,str(publicIp)),
+            ("localIp"  ,str(localIp))
+            ])
+        mSR.sensorFinisherIP(dateTimeNow,sensorName,sensorDictionary)
+    except Exception as e:
+        print ("Error: %s" % (str(e)))
+        
+        
+   
 if __name__ == "__main__":
     print("=============")
     print("    MINTS    ")

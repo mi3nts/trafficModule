@@ -99,23 +99,12 @@ airmarPorts           = findPortV2("USB-Serial Controller D",23)
 rg15Ports             = findPortV2("USB-Serial Controller",21)
 canareePorts          = findPortV2("Canaree PM",10)
 
-ipsPorts              = ["/dev/ttyS1"]
-climateSensors        = ["BME280","BME680","SCD30"]
-climateTargets        = ["WIMDA_airTemperature","WIMDA_barrometricPressureBars","WIMDA_relativeHumidity","WIMDA_dewPoint","YXXDR_barrometricPressureBars"]
-
-# For MQTT 
+ipsPorts              = findIPSPorts()
 mqttOn                = True
 mqttCredentialsFile   = 'mintsXU4/credentials.yml'
 mqttBroker            = "mqtt.circ.utdallas.edu"
 mqttPort              =  8883  # Secure port
 
-
-
-mdls = {}
-
-for target in climateTargets:
-    for climateSensor in climateSensors:
-        mdls[target +"_" +climateSensor + "_MDL"] = pd.read_pickle(getPathGeneric(modelsPklsFolder,nodeID,target+"_MDL_"+climateSensor,"pkl"));
 
 if __name__ == "__main__":
     # the following code is for debugging
@@ -131,5 +120,4 @@ if __name__ == "__main__":
     print("IPS Ports:")
     for dev in ipsPorts:
         print("\t{0}".format(dev))
-
 

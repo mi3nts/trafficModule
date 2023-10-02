@@ -39,9 +39,6 @@ latestDisplayOn          = mD.latestDisplayOn
 dataFolderMQTT           = mD.dataFolderMQTT
 latestOn                 = mD.latestOn
 mqttOn                   = mD.mqttOn
-climateSensors           = mD.climateSensors
-mdls                     = mD.mdls
-dataFolderCC             = mD.dataFolderCC
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
     #Getting Write Path
@@ -52,12 +49,12 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     if(latestOn):
        mL.writeJSONLatest(sensorDictionary,sensorName)
     if(mqttOn):
-       mL.writeMQTTLatest(sensorDictionary,sensorName)  
-
-    if sensorName in climateSensors:
-        sensorFinisherCalibrated(dateTime,sensorName,sensorDictionary)
+       mL.writeMQTTLatest(sensorDictionary,sensorName)   
 
     print("-----------------------------------")
+    print(sensorName)
+    print(sensorDictionary)
+
 
 # At this point if the sensor name is a climate sensor 
 
